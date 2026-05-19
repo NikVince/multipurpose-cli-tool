@@ -180,6 +180,11 @@ void numberBaseConverter() {
             return;
     }
 
+    if (sourceBase == targetBase) {
+        std::cout << "Source and target bases are the same. Value: " << numberInput << '\n';
+        return;
+    }
+
     const std::string converted = formatUnsigned(value, targetBase);
 
     std::cout << numberInput << " (base " << sourceBase << ") = " << converted << " (base "
