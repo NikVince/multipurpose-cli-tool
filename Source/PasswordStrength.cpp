@@ -9,10 +9,6 @@ namespace {
 
 constexpr int kMinPasswordLength = 8;
 
-bool isSpecialCharacter(char ch) {
-    return !std::isalnum(static_cast<unsigned char>(ch));
-}
-
 bool readPassword(const char* prompt, std::string& password) {
     std::cout << prompt;
     if (!std::getline(std::cin, password)) {
@@ -43,11 +39,14 @@ PasswordAnalysis analyzePassword(const std::string& password) {
 
         if (std::islower(uch)) {
             analysis.criteria.hasLower = true;
-        } else if (std::isupper(uch)) {
+        }
+        if (std::isupper(uch)) {
             analysis.criteria.hasUpper = true;
-        } else if (std::isdigit(uch)) {
+        }
+        if (std::isdigit(uch)) {
             analysis.criteria.hasDigit = true;
-        } else if (isSpecialCharacter(ch)) {
+        }
+        if (!std::isalnum(uch)) {
             analysis.criteria.hasSpecial = true;
         }
     }
@@ -81,9 +80,9 @@ const char* strengthLevelName(StrengthLevel level) {
             return "Good";
         case StrengthLevel::Strong:
             return "Strong";
+        default:
+            return "Unknown";
     }
-
-    return "Unknown";
 }
 
 void passwordStrengthChecker() {
