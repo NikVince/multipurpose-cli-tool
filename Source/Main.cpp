@@ -5,7 +5,7 @@
 
 void displayMenu() {
     std::cout << "\n===== UTILITY PROGRAM MENU =====\n";
-    std::cout << "1. [First Utility Function]\n";
+    std::cout << "1. Basic Calculator\n";
     std::cout << "2. [Second Utility Function]\n";
     std::cout << "3. [Third Utility Function]\n";
     std::cout << "4. [Fourth Utility Function]\n";
@@ -29,7 +29,7 @@ int main() {
 
         switch (choice) {
             case 1:
-                firstUtility();
+                basicCalculator();
                 break;
             case 2:
                 secondUtility();

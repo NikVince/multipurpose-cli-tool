@@ -3,7 +3,7 @@
 
 // Utility function declarations (implementations in Source/Utility.cpp)
 
-void firstUtility();
+void basicCalculator();
 void secondUtility();
 void thirdUtility();
 void fourthUtility();
