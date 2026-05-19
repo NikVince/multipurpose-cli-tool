@@ -7,14 +7,49 @@
 
 namespace {
 
-bool readDouble(const char* prompt, double& value) {
-    std::cout << prompt;
-    if (!(std::cin >> value)) {
+bool getValidNumber(const char* prompt, double& num) {
+    while (true) {
+        std::cout << prompt;
+        if (std::cin >> num) {
+            return true;
+        }
+
+        if (std::cin.eof()) {
+            std::cout << "Error: input ended unexpectedly.\n";
+            return false;
+        }
+
+        std::cout << "Invalid input. Please enter a number: ";
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        return false;
     }
-    return true;
+}
+
+char getValidOperation() {
+    char operation = '\0';
+
+    while (true) {
+        std::cout << "Enter the operation (+, -, *, /): ";
+        if (!(std::cin >> operation)) {
+            if (std::cin.eof()) {
+                std::cout << "Error: input ended unexpectedly.\n";
+                return '\0';
+            }
+
+            std::cout << "Invalid input. Please enter an operation (+, -, *, /): ";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
+
+        if (operation == '+' || operation == '-' || operation == '*' || operation == '/') {
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return operation;
+        }
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid operation. Please use +, -, *, or /.\n";
+    }
 }
 
 size_t countWords(const std::string& text) {
@@ -55,24 +90,24 @@ void basicCalculator() {
     double first = 0.0;
     double second = 0.0;
 
-    if (!readDouble("Enter the first number: ", first)) {
-        std::cout << "Invalid input. Please enter a valid number.\n";
+    if (!getValidNumber("Enter the first number: ", first) ||
+        !getValidNumber("Enter the second number: ", second)) {
         return;
     }
 
-    if (!readDouble("Enter the second number: ", second)) {
-        std::cout << "Invalid input. Please enter a valid number.\n";
+    const char operation = getValidOperation();
+
+    if (operation == '\0') {
         return;
     }
 
-    std::cout << "Enter the operation (+, -, *, /): ";
-    char operation = '\0';
-    if (!(std::cin >> operation) || (operation != '+' && operation != '-' &&
-                                     operation != '*' && operation != '/')) {
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Invalid operation. Please use +, -, *, or /.\n";
-        return;
+    if (operation == '/') {
+        while (second == 0.0) {
+            std::cout << "Error: division by zero is not allowed.\n";
+            if (!getValidNumber("Enter a non-zero divisor: ", second)) {
+                return;
+            }
+        }
     }
 
     double result = 0.0;
@@ -89,12 +124,7 @@ void basicCalculator() {
             result = first * second;
             break;
         case '/':
-            if (second == 0.0) {
-                std::cout << "Error: division by zero is not allowed.\n";
-                success = false;
-            } else {
-                result = first / second;
-            }
+            result = first / second;
             break;
         default:
             success = false;
