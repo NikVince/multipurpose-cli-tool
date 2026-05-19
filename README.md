@@ -13,8 +13,8 @@ A modular C++ command-line utility program with an interactive menu. Built as th
 - **Basic calculator** — addition, subtraction, multiplication, and division on two numbers, with division-by-zero protection
 - **Word counter** — counts lines, words, and characters (with and without spaces) from multi-line text
 - **Number base converter** — converts non-negative integers between binary, octal, decimal, and hexadecimal
-- **Modular layout** — separate headers and sources per utility; conversion logic is unit-tested
-- Menu slot 4 is reserved for a future utility
+- **Password strength checker** — scores passwords using length, case, digits, and symbols (input is not stored)
+- **Modular layout** — separate headers and sources per utility; core logic covered by unit tests
 
 ## Prerequisites
 
@@ -56,7 +56,7 @@ After starting the program, you will see the main menu:
 1. Basic Calculator
 2. Word Counter
 3. Number Base Converter
-4. [Fourth Utility Function]
+4. Password Strength Checker
 5. Exit
 Enter your choice (1-5):
 ```
@@ -94,12 +94,12 @@ Choose `5` to quit the program.
 | `make` | Compile the project (output: `multipurpose-cli-tool`) |
 | `make run` | Build (if needed) and run the executable |
 | `make clean` | Remove object files and binaries |
-| `make test` | Build and run base converter unit tests |
+| `make test` | Build and run all unit tests |
 
 ### Build without Make
 
 ```bash
-g++ -std=c++17 -Wall -Wextra -IInclude Source/Main.cpp Source/Utility.cpp Source/BaseConverter.cpp -o multipurpose-cli-tool
+g++ -std=c++17 -Wall -Wextra -IInclude Source/Main.cpp Source/Utility.cpp Source/BaseConverter.cpp Source/PasswordStrength.cpp -o multipurpose-cli-tool
 ./multipurpose-cli-tool
 ```
 
@@ -115,13 +115,16 @@ Compiler flags:
 multipurpose-cli-tool/
 ├── Include/
 │   ├── Utility.h          # Calculator and word counter declarations
-│   └── BaseConverter.h    # Base conversion API and UI entry point
+│   ├── BaseConverter.h    # Base conversion API and UI entry point
+│   └── PasswordStrength.h # Password analysis API and UI entry point
 ├── Source/
 │   ├── Main.cpp           # Entry point, menu loop, routing
 │   ├── Utility.cpp        # Calculator and word counter
-│   └── BaseConverter.cpp  # Base conversion logic and interactive UI
+│   ├── BaseConverter.cpp  # Base conversion logic and interactive UI
+│   └── PasswordStrength.cpp
 ├── Tests/
-│   └── BaseConverterTest.cpp
+│   ├── BaseConverterTest.cpp
+│   └── PasswordStrengthTest.cpp
 ├── Makefile               # Build rules (g++)
 ├── .gitignore               # Ignores binary and object files
 ├── LICENSE                  # MIT License
@@ -134,7 +137,7 @@ multipurpose-cli-tool/
 - Implement logic in `Source/Utility.cpp`.
 - Register the option in `displayMenu()` and the `switch` in `Source/Main.cpp`.
 - Rebuild with `make` and test interactively in a terminal.
-- Run `make test` after changing base conversion logic.
+- Run `make test` after changing base conversion or password strength logic.
 
 ## License
 
