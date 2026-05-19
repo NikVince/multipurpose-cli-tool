@@ -1,3 +1,5 @@
 # Build artifacts
 multipurpose-cli-tool
+base-converter-tests
 Source/*.o
+Tests/*.o
