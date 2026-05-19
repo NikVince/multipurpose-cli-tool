@@ -4,7 +4,7 @@
 // Utility function declarations (implementations in Source/Utility.cpp)
 
 void basicCalculator();
-void secondUtility();
+void wordCounter();
 void thirdUtility();
 void fourthUtility();
 
