@@ -1,3 +1,4 @@
+#include "../Include/BaseConverter.h"
 #include "../Include/Utility.h"
 
 #include <iostream>
@@ -35,7 +36,7 @@ void displayMenu() {
     std::cout << "\n===== UTILITY PROGRAM MENU =====\n";
     std::cout << "1. Basic Calculator\n";
     std::cout << "2. Word Counter\n";
-    std::cout << "3. [Third Utility Function]\n";
+    std::cout << "3. Number Base Converter\n";
     std::cout << "4. [Fourth Utility Function]\n";
     std::cout << "5. Exit\n";
     std::cout << "Enter your choice (1-5): ";
@@ -57,7 +58,7 @@ int main() {
                 wordCounter();
                 break;
             case 3:
-                thirdUtility();
+                numberBaseConverter();
                 break;
             case 4:
                 fourthUtility();

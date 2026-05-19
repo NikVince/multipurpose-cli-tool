@@ -185,9 +185,6 @@ void wordCounter() {
     std::cout << "Characters (without spaces): " << charsWithoutSpaces << '\n';
 }
 
-void thirdUtility() {
-    std::cout << "[Third Utility Function] — not implemented yet.\n";
-}
 
 void fourthUtility() {
     std::cout << "[Fourth Utility Function] — not implemented yet.\n";
