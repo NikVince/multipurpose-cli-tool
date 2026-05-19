@@ -3,6 +3,34 @@
 #include <iostream>
 #include <limits>
 
+namespace {
+
+int getValidMenuChoice() {
+    int choice = 0;
+
+    while (true) {
+        if (!(std::cin >> choice)) {
+            if (std::cin.eof()) {
+                std::cout << "\nGoodbye!\n";
+                return 0;
+            }
+
+            std::cout << "Invalid input. Please enter a number between 1 and 5: ";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
+
+        if (choice >= 1 && choice <= 5) {
+            return choice;
+        }
+
+        std::cout << "Invalid choice. Please enter a number between 1 and 5: ";
+    }
+}
+
+}  // namespace
+
 void displayMenu() {
     std::cout << "\n===== UTILITY PROGRAM MENU =====\n";
     std::cout << "1. Basic Calculator\n";
@@ -19,13 +47,7 @@ int main() {
     while (running) {
         displayMenu();
 
-        int choice = 0;
-        if (!(std::cin >> choice)) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid input. Please enter a number between 1 and 5.\n";
-            continue;
-        }
+        const int choice = getValidMenuChoice();
 
         switch (choice) {
             case 1:
@@ -43,9 +65,6 @@ int main() {
             case 5:
                 std::cout << "Goodbye!\n";
                 running = false;
-                break;
-            default:
-                std::cout << "Invalid choice. Please enter a number between 1 and 5.\n";
                 break;
         }
     }
