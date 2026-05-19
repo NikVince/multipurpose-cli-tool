@@ -1,6 +1,6 @@
 # multipurpose-cli-tool
 
-A modular C++ command-line utility program with an interactive menu.
+A modular C++ command-line utility program with an interactive menu. Built as the **Module 1 capstone** for the [Microsoft Introduction to C++ Programming Professional Certificate](https://www.coursera.org/professional-certificates/microsoft-introduction-to-c-plus-plus-programming) on Coursera (not the final capstone for the full four-course program).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![C++17](https://img.shields.io/badge/C%2B%2B-17-blue.svg?logo=c%2B%2B&logoColor=white)](https://isocpp.org/)
@@ -131,3 +131,7 @@ multipurpose-cli-tool/
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgments
+
+Module 1 capstone project for the [Microsoft Introduction to C++ Programming Professional Certificate](https://www.coursera.org/professional-certificates/microsoft-introduction-to-c-plus-plus-programming) on Coursera. The full program includes four courses and separate portfolio projects; this repository covers only the command-line utility assignment from Module 1 of Course 1 (*C++ Programming Fundamentals*).
