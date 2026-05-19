@@ -7,6 +7,12 @@
 
 namespace {
 
+constexpr int kMenuExitOnEof = -1;
+
+void discardRestOfLine() {
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
 int getValidMenuChoice() {
     int choice = 0;
 
@@ -14,13 +20,17 @@ int getValidMenuChoice() {
         if (!(std::cin >> choice)) {
             if (std::cin.eof()) {
                 std::cout << "\nGoodbye!\n";
-                return 0;
+                return kMenuExitOnEof;
             }
 
             std::cout << "Invalid input. Please enter a number between 1 and 5: ";
             std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            discardRestOfLine();
             continue;
+        }
+
+        if (std::cin.peek() != '\n') {
+            discardRestOfLine();
         }
 
         if (choice >= 1 && choice <= 5) {
@@ -50,6 +60,9 @@ int main() {
         displayMenu();
 
         const int choice = getValidMenuChoice();
+        if (choice == kMenuExitOnEof) {
+            break;
+        }
 
         switch (choice) {
             case 1:
