@@ -11,8 +11,10 @@ A modular C++ command-line utility program with an interactive menu. Built as th
 
 - **Interactive main menu** — numbered options, input validation, graceful exit
 - **Basic calculator** — addition, subtraction, multiplication, and division on two numbers, with division-by-zero protection
-- **Modular layout** — separate header (`Include/`), entry point (`Source/Main.cpp`), and utility implementations (`Source/Utility.cpp`)
-- Additional utilities (menu slots 2–4) are reserved for future implementation
+- **Word counter** — counts lines, words, and characters (with and without spaces) from multi-line text
+- **Number base converter** — converts non-negative integers between binary, octal, decimal, and hexadecimal
+- **Modular layout** — separate headers and sources per utility; conversion logic is unit-tested
+- Menu slot 4 is reserved for a future utility
 
 ## Prerequisites
 
@@ -52,8 +54,8 @@ After starting the program, you will see the main menu:
 ```text
 ===== UTILITY PROGRAM MENU =====
 1. Basic Calculator
-2. [Second Utility Function]
-3. [Third Utility Function]
+2. Word Counter
+3. Number Base Converter
 4. [Fourth Utility Function]
 5. Exit
 Enter your choice (1-5):
@@ -91,12 +93,13 @@ Choose `5` to quit the program.
 |---------|-------------|
 | `make` | Compile the project (output: `multipurpose-cli-tool`) |
 | `make run` | Build (if needed) and run the executable |
-| `make clean` | Remove object files and the binary |
+| `make clean` | Remove object files and binaries |
+| `make test` | Build and run base converter unit tests |
 
 ### Build without Make
 
 ```bash
-g++ -std=c++17 -Wall -Wextra -IInclude Source/Main.cpp Source/Utility.cpp -o multipurpose-cli-tool
+g++ -std=c++17 -Wall -Wextra -IInclude Source/Main.cpp Source/Utility.cpp Source/BaseConverter.cpp -o multipurpose-cli-tool
 ./multipurpose-cli-tool
 ```
 
@@ -111,10 +114,14 @@ Compiler flags:
 ```text
 multipurpose-cli-tool/
 ├── Include/
-│   └── Utility.h          # Utility function declarations
+│   ├── Utility.h          # Calculator and word counter declarations
+│   └── BaseConverter.h    # Base conversion API and UI entry point
 ├── Source/
 │   ├── Main.cpp           # Entry point, menu loop, routing
-│   └── Utility.cpp        # Utility implementations
+│   ├── Utility.cpp        # Calculator and word counter
+│   └── BaseConverter.cpp  # Base conversion logic and interactive UI
+├── Tests/
+│   └── BaseConverterTest.cpp
 ├── Makefile               # Build rules (g++)
 ├── .gitignore               # Ignores binary and object files
 ├── LICENSE                  # MIT License
@@ -127,6 +134,7 @@ multipurpose-cli-tool/
 - Implement logic in `Source/Utility.cpp`.
 - Register the option in `displayMenu()` and the `switch` in `Source/Main.cpp`.
 - Rebuild with `make` and test interactively in a terminal.
+- Run `make test` after changing base conversion logic.
 
 ## License
 
