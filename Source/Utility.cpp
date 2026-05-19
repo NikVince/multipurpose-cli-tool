@@ -1,7 +1,9 @@
 #include "../Include/Utility.h"
 
+#include <cctype>
 #include <iostream>
 #include <limits>
+#include <string>
 
 namespace {
 
@@ -13,6 +15,34 @@ bool readDouble(const char* prompt, double& value) {
         return false;
     }
     return true;
+}
+
+size_t countWords(const std::string& text) {
+    size_t count = 0;
+    bool inWord = false;
+
+    for (char ch : text) {
+        if (std::isspace(static_cast<unsigned char>(ch))) {
+            inWord = false;
+        } else if (!inWord) {
+            inWord = true;
+            ++count;
+        }
+    }
+
+    return count;
+}
+
+size_t countCharactersWithoutSpaces(const std::string& text) {
+    size_t count = 0;
+
+    for (char ch : text) {
+        if (!std::isspace(static_cast<unsigned char>(ch))) {
+            ++count;
+        }
+    }
+
+    return count;
 }
 
 }  // namespace
@@ -76,8 +106,50 @@ void basicCalculator() {
     }
 }
 
-void secondUtility() {
-    std::cout << "[Second Utility Function] — not implemented yet.\n";
+void wordCounter() {
+    std::cout << "\n===== WORD COUNTER =====\n";
+    std::cout << "Count words, characters, and lines in your text.\n";
+    std::cout << "Enter one or more lines, then press Enter on an empty line to finish.\n\n";
+
+    // Discard newline left in the buffer after the menu choice (cin >> choice).
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::string text;
+    std::string line;
+    size_t lineCount = 0;
+
+    while (true) {
+        if (!std::getline(std::cin, line)) {
+            std::cin.clear();
+            std::cout << "Error: could not read input.\n";
+            return;
+        }
+
+        if (line.empty()) {
+            break;
+        }
+
+        if (!text.empty()) {
+            text += '\n';
+        }
+        text += line;
+        ++lineCount;
+    }
+
+    if (text.empty()) {
+        std::cout << "No text entered. Nothing to count.\n";
+        return;
+    }
+
+    const size_t words = countWords(text);
+    const size_t charsWithSpaces = text.size();
+    const size_t charsWithoutSpaces = countCharactersWithoutSpaces(text);
+
+    std::cout << "\n--- Results ---\n";
+    std::cout << "Lines:                      " << lineCount << '\n';
+    std::cout << "Words:                      " << words << '\n';
+    std::cout << "Characters (with spaces):   " << charsWithSpaces << '\n';
+    std::cout << "Characters (without spaces): " << charsWithoutSpaces << '\n';
 }
 
 void thirdUtility() {
