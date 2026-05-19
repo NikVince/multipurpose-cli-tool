@@ -5,6 +5,5 @@
 
 void basicCalculator();
 void wordCounter();
-void fourthUtility();
 
 #endif
