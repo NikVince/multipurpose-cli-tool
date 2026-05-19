@@ -1,5 +1,6 @@
 # Build artifacts
 multipurpose-cli-tool
 base-converter-tests
+password-strength-tests
 Source/*.o
 Tests/*.o

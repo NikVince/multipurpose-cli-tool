@@ -1,11 +1,12 @@
 CXX      := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -IInclude
 TARGET   := multipurpose-cli-tool
-TEST_TARGET := base-converter-tests
-SRCS     := Source/Main.cpp Source/Utility.cpp Source/BaseConverter.cpp
+BASE_TEST_TARGET := base-converter-tests
+PASSWORD_TEST_TARGET := password-strength-tests
+SRCS     := Source/Main.cpp Source/Utility.cpp Source/BaseConverter.cpp Source/PasswordStrength.cpp
 OBJS     := $(SRCS:.cpp=.o)
-TEST_SRCS := Tests/BaseConverterTest.cpp Source/BaseConverter.cpp
-TEST_OBJS := Tests/BaseConverterTest.o Source/BaseConverter.o
+BASE_TEST_OBJS := Tests/BaseConverterTest.o Source/BaseConverter.o
+PASSWORD_TEST_OBJS := Tests/PasswordStrengthTest.o Source/PasswordStrength.o
 
 .PHONY: all clean run test
 
@@ -14,7 +15,10 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-$(TEST_TARGET): $(TEST_OBJS)
+$(BASE_TEST_TARGET): $(BASE_TEST_OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+$(PASSWORD_TEST_TARGET): $(PASSWORD_TEST_OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 Source/%.o: Source/%.cpp
@@ -23,11 +27,13 @@ Source/%.o: Source/%.cpp
 Tests/%.o: Tests/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-test: $(TEST_TARGET)
-	./$(TEST_TARGET)
+test: $(BASE_TEST_TARGET) $(PASSWORD_TEST_TARGET)
+	./$(BASE_TEST_TARGET)
+	./$(PASSWORD_TEST_TARGET)
 
 run: $(TARGET)
 	./$(TARGET)
 
 clean:
-	rm -f $(OBJS) $(TEST_OBJS) $(TARGET) $(TEST_TARGET)
+	rm -f $(OBJS) Tests/BaseConverterTest.o Tests/PasswordStrengthTest.o \
+		$(TARGET) $(BASE_TEST_TARGET) $(PASSWORD_TEST_TARGET)
