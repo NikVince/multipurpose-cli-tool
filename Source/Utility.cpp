@@ -145,30 +145,33 @@ void wordCounter() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     std::string text;
-    std::string line;
     size_t lineCount = 0;
 
-    while (true) {
-        if (!std::getline(std::cin, line)) {
-            std::cin.clear();
-            std::cout << "Error: could not read input.\n";
-            return;
+    while (text.empty()) {
+        std::string line;
+        lineCount = 0;
+
+        while (true) {
+            if (!std::getline(std::cin, line)) {
+                std::cin.clear();
+                std::cout << "Error: could not read input.\n";
+                return;
+            }
+
+            if (line.empty()) {
+                break;
+            }
+
+            if (!text.empty()) {
+                text += '\n';
+            }
+            text += line;
+            ++lineCount;
         }
 
-        if (line.empty()) {
-            break;
+        if (text.empty()) {
+            std::cout << "No text entered. Please enter at least one line of text.\n\n";
         }
-
-        if (!text.empty()) {
-            text += '\n';
-        }
-        text += line;
-        ++lineCount;
-    }
-
-    if (text.empty()) {
-        std::cout << "No text entered. Nothing to count.\n";
-        return;
     }
 
     const size_t words = countWords(text);
