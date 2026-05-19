@@ -16,6 +16,10 @@ A modular C++ command-line utility program with an interactive menu. Built as th
 - **Password strength checker** — scores passwords using length, case, digits, and symbols (input is not stored)
 - **Modular layout** — separate headers and sources per utility; core logic covered by unit tests
 
+### Project status
+
+All **four** required menu utilities are implemented (calculator, word counter, base converter, password checker). The interactive menu includes validation, error handling, and return-to-menu behavior. Unit tests cover base conversion and password analysis; run `make test` before submitting.
+
 ## Prerequisites
 
 | Requirement | Notes |
@@ -83,6 +87,30 @@ Enter the operation (+, -, *, /): /
 
 Invalid input (non-numeric values, unknown operators, or division by zero) prints an error message and returns you to the main menu without crashing.
 
+### Word counter (option 2)
+
+1. Choose `2` from the main menu.
+2. Type one or more lines of text.
+3. Press **Enter** on an empty line to finish.
+4. View line, word, and character counts (with and without spaces).
+
+If no text is entered, the utility asks you to try again.
+
+### Number base converter (option 3)
+
+1. Choose `3` from the main menu.
+2. Enter a non-negative integer (digits `0-9` and `A-F` for hexadecimal).
+3. Enter the **source** base (`2`, `8`, `10`, or `16`), then the **target** base.
+4. View the converted value.
+
+Invalid digits for the chosen base and overflow are reported without crashing.
+
+### Password strength checker (option 4)
+
+1. Choose `4` from the main menu.
+2. Enter a password (input is visible in the terminal and is **not** stored).
+3. Review the criteria checklist and strength rating (Weak → Strong).
+
 ### Exit
 
 Choose `5` to quit the program.
@@ -126,6 +154,7 @@ multipurpose-cli-tool/
 │   ├── BaseConverterTest.cpp
 │   └── PasswordStrengthTest.cpp
 ├── Makefile               # Build rules (g++)
+├── .clangd                  # Editor flags (C++17, Include path) for clangd
 ├── .gitignore               # Ignores binary and object files
 ├── LICENSE                  # MIT License
 └── README.md
@@ -133,11 +162,11 @@ multipurpose-cli-tool/
 
 ## Development
 
-- Add new utility declarations in `Include/Utility.h`.
-- Implement logic in `Source/Utility.cpp`.
+- Add a header/source pair under `Include/` and `Source/` (or extend `Utility.cpp` for smaller tools).
 - Register the option in `displayMenu()` and the `switch` in `Source/Main.cpp`.
 - Rebuild with `make` and test interactively in a terminal.
 - Run `make test` after changing base conversion or password strength logic.
+- If the IDE shows false errors on `enum class` or includes, reload after `.clangd` is present.
 
 ## License
 
